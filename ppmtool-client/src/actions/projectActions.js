@@ -4,16 +4,20 @@ import {GET_ERRORS} from "./types";
 
 export const createProject = (project, history) => async dispatch => {
     try {
-        const res = await axios.post
-        ("http://localhost:8080/api/project", project)
-        history.push("/dashboard")
+        const res = await axios.post ("http://localhost:8080/api/project", project);
+        history.push("/dashboard");
 
 
     }catch (err) {
+        if (err.response) {
+
+        
         dispatch({
             type:GET_ERRORS,
             payload:err.response.data
-        })
-
+        });
+    }else{
+        console.error("Network error:", err.message);
+    }
     }
 }
